@@ -1,26 +1,49 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, StyleSheet} from "react-native";
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, Alert} from "react-native";
 
-const App = () => {
-    const [bgColor, setBgColor] = useState("green");
+const LoginScreen = () => {
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [message, setMessage] = useState({text: "", color: ""});
+
+    const validatePhoneNumber = (phone) => {
+        const phoneRegex = /^[0-9]{10}$/; // Kiểm tra số có đúng 10 chữ số không
+        return phoneRegex.test(phone);
+    };
+
+    const handleInputChange = (text) => {
+        setPhoneNumber(text);
+
+        if (text.length === 10) {
+            if (validatePhoneNumber(text)) {
+                setMessage({text: "Số điện thoại hợp lệ", color: "green"});
+            } else {
+                setMessage({text: "Số điện thoại không đúng định dạng. Vui lòng nhập lại.", color: "red"});
+            }
+        } else {
+            setMessage({text: "", color: ""});
+        }
+    };
+
+    const handleContinue = () => {
+        if (validatePhoneNumber(phoneNumber)) {
+            Alert.alert("Thành công", "Số điện thoại hợp lệ!");
+        } else {
+            setMessage({text: "Số điện thoại không đúng định dạng. Vui lòng nhập lại.", color: "red"});
+        }
+    };
 
     return (
-        <View style={[styles.container, {backgroundColor: bgColor}]}>
-            <Text style={styles.text}>{bgColor.toUpperCase()}</Text>
-            <TouchableOpacity style={[styles.button, {backgroundColor: "blue"}]} onPress={() => setBgColor("blue")}>
-                <Text style={styles.buttonText}>BLUE</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, {backgroundColor: "brown"}]} onPress={() => setBgColor("brown")}>
-                <Text style={styles.buttonText}>BROWN</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, {backgroundColor: "yellow"}]} onPress={() => setBgColor("yellow")}>
-                <Text style={[styles.buttonText, {color: "black"}]}>YELLOW</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, {backgroundColor: "red"}]} onPress={() => setBgColor("red")}>
-                <Text style={styles.buttonText}>RED</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, {backgroundColor: "black"}]} onPress={() => setBgColor("black")}>
-                <Text style={[styles.buttonText, {color: "white"}]}>BLACK</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Đăng nhập</Text>
+            <Text style={styles.subtitle}>Nhập số điện thoại</Text>
+            <Text style={styles.description}>Dùng số điện thoại để đăng nhập hoặc đăng ký tài khoản OneHousing Pro</Text>
+
+            <TextInput style={styles.input} keyboardType="numeric" placeholder="Nhập số điện thoại" value={phoneNumber} onChangeText={handleInputChange} maxLength={10} />
+
+            {message.text ? <Text style={[styles.message, {color: message.color}]}>{message.text}</Text> : null}
+
+            <TouchableOpacity style={styles.button} onPress={handleContinue}>
+                <Text style={styles.buttonText}>Tiếp tục</Text>
             </TouchableOpacity>
         </View>
     );
@@ -29,27 +52,48 @@ const App = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 20,
+        backgroundColor: "#fff",
         justifyContent: "center",
-        alignItems: "center",
     },
-    text: {
+    title: {
         fontSize: 24,
         fontWeight: "bold",
-        color: "white",
+        marginBottom: 10,
+    },
+    subtitle: {
+        fontSize: 18,
+        marginBottom: 5,
+    },
+    description: {
+        fontSize: 14,
+        color: "gray",
         marginBottom: 20,
     },
+    input: {
+        height: 50,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        fontSize: 16,
+        marginBottom: 5,
+    },
+    message: {
+        fontSize: 14,
+        marginBottom: 10,
+    },
     button: {
-        width: 200,
-        padding: 15,
-        marginVertical: 10,
+        backgroundColor: "blue",
+        paddingVertical: 15,
+        borderRadius: 10,
         alignItems: "center",
-        borderRadius: 5,
     },
     buttonText: {
+        color: "#fff",
         fontSize: 18,
         fontWeight: "bold",
-        color: "white",
     },
 });
 
-export default App;
+export default LoginScreen;
