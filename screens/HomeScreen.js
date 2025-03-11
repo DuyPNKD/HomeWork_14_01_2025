@@ -1,108 +1,51 @@
 import React from "react";
-import {View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView} from "react-native";
-import {MaterialIcons, Ionicons} from "@expo/vector-icons";
+import {View, Text, Image, TouchableOpacity, StyleSheet} from "react-native";
+import {Ionicons} from "@expo/vector-icons";
 
-const HomeScreen = () => {
+export default function HomeScreen({navigation}) {
     return (
-        <ScrollView style={styles.container}>
-            {/* Search Bar */}
-            <View style={styles.searchContainer}>
-                <TextInput style={styles.searchInput} placeholder="Search for meals or area" />
-                <Ionicons name="search" size={24} color="gray" style={styles.searchIcon} />
-            </View>
-
-            {/* Top Categories */}
-            <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Top Categories</Text>
-                <TouchableOpacity>
-                    <Text style={styles.filterText}>Filter</Text>
+        <View style={styles.container}>
+            {/* Header */}
+            <View style={styles.header}>
+                <View>
+                    <Text style={styles.greeting}>Hello 👋</Text>
+                    <Text style={styles.name}>Christie Doe</Text>
+                </View>
+                <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+                    <Image source={{uri: "https://randomuser.me/api/portraits/women/44.jpg"}} style={styles.avatar} />
                 </TouchableOpacity>
             </View>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryContainer}>
-                <Image source={require("../assets/pizza.jpg")} style={styles.categoryImage} />
-                <Image source={require("../assets/burger.jpg")} style={styles.categoryImage} />
-                <Image source={require("../assets/steak.jpg")} style={styles.categoryImage} />
-            </ScrollView>
 
-            {/* Popular Items */}
-            <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Popular Items</Text>
-                <TouchableOpacity>
-                    <Text style={styles.viewAllText}>View all</Text>
+            {/* Insights */}
+            <View style={styles.insights}>
+                <TouchableOpacity style={styles.card}>
+                    <Ionicons name="scan-outline" size={24} color="#4CAF50" />
+                    <Text style={styles.cardText}>Scan new</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.card}>
+                    <Ionicons name="alert-circle-outline" size={24} color="#FF9800" />
+                    <Text style={styles.cardText}>Counterfeits</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.card}>
+                    <Ionicons name="checkmark-circle-outline" size={24} color="#2196F3" />
+                    <Text style={styles.cardText}>Success</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.card}>
+                    <Ionicons name="calendar-outline" size={24} color="#9C27B0" />
+                    <Text style={styles.cardText}>Directory</Text>
                 </TouchableOpacity>
             </View>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.popularContainer}>
-                <View style={styles.foodItem}>
-                    <Image source={require("../assets/food1.jpg")} style={styles.foodImage} />
-                    <Text>Food 1</Text>
-                    <Text>$1</Text>
-                </View>
-                <View style={styles.foodItem}>
-                    <Image source={require("../assets/food2.jpg")} style={styles.foodImage} />
-                    <Text>Food 2</Text>
-                    <Text>$3</Text>
-                </View>
-                <View style={styles.foodItem}>
-                    <Image source={require("../assets/food3.jpg")} style={styles.foodImage} />
-                    <Text>Food 2</Text>
-                    <Text>$3</Text>
-                </View>
-                <View style={styles.foodItem}>
-                    <Image source={require("../assets/food4.jpg")} style={styles.foodImage} />
-                    <Text>Food 2</Text>
-                    <Text>$3</Text>
-                </View>
-            </ScrollView>
-
-            {/* Popular Items */}
-            <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Popular Items</Text>
-                <TouchableOpacity>
-                    <Text style={styles.viewAllText}>View all</Text>
-                </TouchableOpacity>
-            </View>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.popularContainer}>
-                <View style={styles.foodItem}>
-                    <Image source={require("../assets/food3.jpg")} style={styles.foodImage} />
-                    <Text>Food 1</Text>
-                    <Text>$1</Text>
-                </View>
-                <View style={styles.foodItem}>
-                    <Image source={require("../assets/food4.jpg")} style={styles.foodImage} />
-                    <Text>Food 2</Text>
-                    <Text>$3</Text>
-                </View>
-                <View style={styles.foodItem}>
-                    <Image source={require("../assets/food1.jpg")} style={styles.foodImage} />
-                    <Text>Food 1</Text>
-                    <Text>$1</Text>
-                </View>
-                <View style={styles.foodItem}>
-                    <Image source={require("../assets/food2.jpg")} style={styles.foodImage} />
-                    <Text>Food 2</Text>
-                    <Text>$3</Text>
-                </View>
-            </ScrollView>
-        </ScrollView>
+        </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
-    container: {flex: 1, backgroundColor: "white", padding: 10},
-    headerContainer: {flexDirection: "row", justifyContent: "space-between", marginBottom: 10},
-    headerText: {fontSize: 24, fontWeight: "bold"},
-    searchContainer: {flexDirection: "row", alignItems: "center", backgroundColor: "#f0f0f0", borderRadius: 10, paddingHorizontal: 10, marginBottom: 10},
-    searchInput: {flex: 1, height: 40},
-    searchIcon: {marginLeft: 5},
-    sectionContainer: {flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 10},
-    sectionTitle: {fontSize: 18, fontWeight: "bold"},
-    filterText: {color: "orange"},
-    categoryContainer: {flexDirection: "row", marginBottom: 10},
-    categoryImage: {width: 100, height: 80, borderRadius: 10, marginRight: 10},
-    popularContainer: {flexDirection: "row", marginBottom: 10},
-    foodItem: {alignItems: "center", marginRight: 10},
-    foodImage: {width: 120, height: 100, borderRadius: 10},
-    viewAllText: {color: "orange"},
+    container: {flex: 1, backgroundColor: "#fff", padding: 20},
+    header: {flexDirection: "row", justifyContent: "space-between", alignItems: "center"},
+    greeting: {fontSize: 18, color: "#333"},
+    name: {fontSize: 22, fontWeight: "bold", color: "#000"},
+    avatar: {width: 40, height: 40, borderRadius: 20},
+    insights: {flexDirection: "row", flexWrap: "wrap", marginTop: 20},
+    card: {width: "48%", backgroundColor: "#F5F5F5", padding: 15, borderRadius: 10, marginBottom: 10, alignItems: "center"},
+    cardText: {marginTop: 5, fontSize: 14, fontWeight: "500"},
 });
-
-export default HomeScreen;
