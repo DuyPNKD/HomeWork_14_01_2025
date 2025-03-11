@@ -18,34 +18,56 @@ export default function HomeScreen({navigation}) {
 
             {/* Insights */}
             <View style={styles.insights}>
-                <TouchableOpacity style={styles.card}>
-                    <Ionicons name="scan-outline" size={24} color="#4CAF50" />
-                    <Text style={styles.cardText}>Scan new</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.card}>
-                    <Ionicons name="alert-circle-outline" size={24} color="#FF9800" />
-                    <Text style={styles.cardText}>Counterfeits</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.card}>
-                    <Ionicons name="checkmark-circle-outline" size={24} color="#2196F3" />
-                    <Text style={styles.cardText}>Success</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.card}>
-                    <Ionicons name="calendar-outline" size={24} color="#9C27B0" />
-                    <Text style={styles.cardText}>Directory</Text>
-                </TouchableOpacity>
+                <Text style={styles.insightsGreeting}>Your Insights</Text>
+                <View style={styles.row}>
+                    <TouchableOpacity style={styles.card}>
+                        <View style={[styles.iconContainer, {backgroundColor: "#E8E7FE"}]}>
+                            <Ionicons name="scan-outline" size={28} color="#6C63FF" />
+                        </View>
+                        <Text style={styles.cardText}>Scan new</Text>
+                        <Text style={styles.cardSubText}>Scanned 483</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.card}>
+                        <View style={[styles.iconContainer, {backgroundColor: "#FFE8E1"}]}>
+                            <Ionicons name="alert-circle-outline" size={28} color="#FF7043" />
+                        </View>
+                        <Text style={styles.cardText}>Counterfeits</Text>
+                        <Text style={styles.cardSubText}>Counterfeited 32</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.row}>
+                    <TouchableOpacity style={styles.card}>
+                        <View style={[styles.iconContainer, {backgroundColor: "#E8F5E9"}]}>
+                            <Ionicons name="checkmark-circle-outline" size={28} color="#4CAF50" />
+                        </View>
+                        <Text style={styles.cardText}>Success</Text>
+                        <Text style={styles.cardSubText}>Checkouts 8</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.card}>
+                        <View style={[styles.iconContainer, {backgroundColor: "#E1F5FE"}]}>
+                            <Ionicons name="calendar-outline" size={28} color="#29B6F6" />
+                        </View>
+                        <Text style={styles.cardText}>Directory</Text>
+                        <Text style={styles.cardSubText}>History 26</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {flex: 1, backgroundColor: "#fff", padding: 20},
-    header: {flexDirection: "row", justifyContent: "space-between", alignItems: "center"},
-    greeting: {fontSize: 18, color: "#333"},
-    name: {fontSize: 22, fontWeight: "bold", color: "#000"},
-    avatar: {width: 40, height: 40, borderRadius: 20},
-    insights: {flexDirection: "row", flexWrap: "wrap", marginTop: 20},
-    card: {width: "48%", backgroundColor: "#F5F5F5", padding: 15, borderRadius: 10, marginBottom: 10, alignItems: "center"},
-    cardText: {marginTop: 5, fontSize: 14, fontWeight: "500"},
+    container: {flex: 1, backgroundColor: "#fff", padding: 20, marginTop: 30},
+    header: {flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 20},
+    greeting: {fontSize: 24, fontWeight: "bold", color: "#000"},
+    name: {fontSize: 18, fontWeight: "400", color: "#000"},
+    avatar: {width: 50, height: 50, borderRadius: 25},
+    insights: {marginBottom: 30},
+    row: {flexDirection: "row", justifyContent: "space-between", marginBottom: 15},
+    card: {width: "48%", backgroundColor: "#F9F9F9", padding: 20, borderRadius: 12, alignItems: "center", justifyContent: "center", height: 180},
+    iconContainer: {width: 50, height: 50, borderRadius: 14, justifyContent: "center", alignItems: "center", marginBottom: 10},
+    cardText: {marginTop: 5, fontSize: 16, fontWeight: "600"},
+    cardSubText: {fontSize: 14, color: "#757575"},
+    bottomNav: {flexDirection: "row", justifyContent: "space-around", paddingVertical: 15, backgroundColor: "#fff", borderTopLeftRadius: 30, borderTopRightRadius: 30, position: "absolute", bottom: 0, left: 0, right: 0, elevation: 5},
+    insightsGreeting: {fontSize: 20, fontWeight: "400", color: "#000", marginBottom: 25},
 });
