@@ -1,48 +1,47 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from "react";
+import {NavigationContainer} from "@react-navigation/native";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-// Import các màn hình
-import SplashScreen from './screens/SplashScreen';
-import OnboardingScreen from './screens/OnboardingScreen';
-import SignInScreen from './screens/SignInScreen';
-import NumberScreen from './screens/NumberScreen';
-import VerificationScreen from './screens/VerificationScreen';
+import HomeScreen from "./screens/HomeScreen";
+import CartScreen from "./screens/CartScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
-const App = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
-        <Stack.Screen
-          name="Splash"
-          component={SplashScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Onboarding"
-          component={OnboardingScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SignIn"
-          component={SignInScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Number"
-          component={NumberScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Verification"
-          component={VerificationScreen}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+export default function App() {
+    return (
+        <NavigationContainer>
+            <Tab.Navigator
+                screenOptions={({route}) => ({
+                    tabBarIcon: ({focused, color, size}) => {
+                        let iconName;
 
-export default App;
+                        if (route.name === "Home") {
+                            iconName = focused ? "home" : "home-outline";
+                        } else if (route.name === "Cart") {
+                            iconName = focused ? "cart" : "cart-outline";
+                        } else if (route.name === "Profile") {
+                            iconName = focused ? "person" : "person-outline";
+                        }
+
+                        return <Ionicons name={iconName} size={size} color={color} />;
+                    },
+                    tabBarActiveTintColor: "#007bff",
+                    tabBarInactiveTintColor: "gray",
+                })}
+            >
+                <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
+                <Tab.Screen
+                    name="Cart"
+                    component={CartScreen}
+                    options={{
+                        headerShown: false,
+                        tabBarBadge: 1,
+                    }}
+                />
+                <Tab.Screen name="Profile" component={ProfileScreen} options={{headerShown: false}} />
+            </Tab.Navigator>
+        </NavigationContainer>
+    );
+}
