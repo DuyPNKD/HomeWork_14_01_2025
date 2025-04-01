@@ -1,47 +1,34 @@
-import React from "react";
-import {NavigationContainer} from "@react-navigation/native";
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import "react-native-gesture-handler";
+import React, {useState, useEffect} from "react";
+import RootRouter from "./routers";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {SafeAreaProvider} from "react-native-safe-area-context";
 
-import HomeScreen from "./screens/HomeScreen";
-import CartScreen from "./screens/CartScreen";
-import ProfileScreen from "./screens/ProfileScreen";
+const App = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-const Tab = createBottomTabNavigator();
+    // Load trạng thái đăng nhập từ AsyncStorage khi mở app
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            const storedLogin = await AsyncStorage.getItem("isLoggedIn");
+            if (storedLogin === "true") {
+                setIsLoggedIn(true);
+            }
+        };
+        checkLoginStatus();
+    }, []);
 
-export default function App() {
+    // Hàm để thay đổi trạng thái đăng nhập
+    const toggleLogin = async (status) => {
+        setIsLoggedIn(status);
+        await AsyncStorage.setItem("isLoggedIn", status.toString());
+    };
+
     return (
-        <NavigationContainer>
-            <Tab.Navigator
-                screenOptions={({route}) => ({
-                    tabBarIcon: ({focused, color, size}) => {
-                        let iconName;
-
-                        if (route.name === "Home") {
-                            iconName = focused ? "home" : "home-outline";
-                        } else if (route.name === "Cart") {
-                            iconName = focused ? "cart" : "cart-outline";
-                        } else if (route.name === "Profile") {
-                            iconName = focused ? "person" : "person-outline";
-                        }
-
-                        return <Ionicons name={iconName} size={size} color={color} />;
-                    },
-                    tabBarActiveTintColor: "#007bff",
-                    tabBarInactiveTintColor: "gray",
-                })}
-            >
-                <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
-                <Tab.Screen
-                    name="Cart"
-                    component={CartScreen}
-                    options={{
-                        headerShown: false,
-                        tabBarBadge: 1,
-                    }}
-                />
-                <Tab.Screen name="Profile" component={ProfileScreen} options={{headerShown: false}} />
-            </Tab.Navigator>
-        </NavigationContainer>
+        <SafeAreaProvider>
+            <RootRouter isLoggedIn={isLoggedIn} setIsLoggedIn={toggleLogin} />
+        </SafeAreaProvider>
     );
-}
+};
+
+export default App;

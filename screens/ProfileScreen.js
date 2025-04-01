@@ -1,49 +1,34 @@
-import React, {useState} from "react";
-import {View, Text, Image, TouchableOpacity, StyleSheet, Switch} from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import React, {useContext} from "react";
+import {View, Text, Image, TouchableOpacity, StyleSheet} from "react-native";
+import {AuthContext} from "../contexts/AuthContext"; // Đúng đường dẫn AuthContext
 
 const ProfileScreen = () => {
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const {setIsLoggedIn} = useContext(AuthContext); // Sử dụng AuthContext
 
-    const menuItems = [
-        {icon: "home-outline", text: "Home"},
-        {icon: "card-outline", text: "My Card"},
-        {icon: "moon-outline", text: "Dark Mode"},
-        {icon: "time-outline", text: "Track Your Order"},
-        {icon: "settings-outline", text: "Settings"},
-        {icon: "help-circle-outline", text: "Help Center"},
-    ];
+    const handleSignOut = () => {
+        setIsLoggedIn(false);
+    };
 
     return (
         <View style={styles.container}>
-            <View style={styles.profileHeader}>
-                <Image source={require("../assets/profile.png")} style={styles.profileImage} />
-                <Text style={styles.profileName}>Rakibul Hasan</Text>
-            </View>
+            {/* Header */}
+            <View style={styles.header} />
+            <Image
+                source={require("../assets/user.jpg")} // Đường dẫn đến ảnh đại diện
+                style={styles.avatar}
+            />
 
-            <View style={styles.menuContainer}>
-                {menuItems.map((item, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        style={styles.menuItem}
-                        onPress={() => {
-                            if (item.text === "Dark Mode") {
-                                setIsDarkMode(!isDarkMode);
-                            }
-                        }}
-                    >
-                        <View style={styles.menuItemLeft}>
-                            <Icon name={item.icon} size={24} color="#000" />
-                            <Text style={styles.menuItemText}>{item.text}</Text>
-                        </View>
-                        {item.text === "Dark Mode" && <Switch value={isDarkMode} onValueChange={setIsDarkMode} />}
-                    </TouchableOpacity>
-                ))}
-            </View>
+            {/* User Info */}
+            <View style={styles.infoContainer}>
+                <Text style={styles.name}>Pham Duy</Text>
+                <Text style={styles.jobTitle}>Mobile Developer</Text>
+                <Text style={styles.description}>I have above 5 years of experience in native mobile apps development, now I am learning React Native.</Text>
 
-            <TouchableOpacity style={styles.logoutButton}>
-                <Text style={styles.logoutText}>Log Out</Text>
-            </TouchableOpacity>
+                {/* Sign Out Button */}
+                <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
+                    <Text style={styles.signOutText}>Sign Out</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
@@ -51,51 +36,51 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
-        padding: 15,
-    },
-    profileHeader: {
         alignItems: "center",
-        marginBottom: 30,
+        backgroundColor: "#f0f0f0",
     },
-    profileImage: {
+    header: {
+        width: "100%",
+        height: 100,
+        backgroundColor: "#1e90ff",
+    },
+    avatar: {
         width: 100,
         height: 100,
         borderRadius: 50,
-        marginBottom: 10,
+        borderWidth: 3,
+        borderColor: "white",
+        position: "absolute",
+        top: 50,
     },
-    profileName: {
-        fontSize: 18,
+    infoContainer: {
+        marginTop: 60,
+        alignItems: "center",
+        paddingHorizontal: 20,
+    },
+    name: {
+        fontSize: 22,
         fontWeight: "bold",
     },
-    menuContainer: {
-        marginBottom: 20,
-    },
-    menuItem: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingVertical: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: "#f1f2f3",
-    },
-    menuItemLeft: {
-        flexDirection: "row",
-        alignItems: "center",
-    },
-    menuItemText: {
-        marginLeft: 15,
+    jobTitle: {
         fontSize: 16,
+        color: "#1e90ff",
+        marginVertical: 5,
     },
-    logoutButton: {
-        backgroundColor: "#007bff",
-        padding: 15,
-        borderRadius: 10,
-        alignItems: "center",
+    description: {
+        textAlign: "center",
+        marginVertical: 10,
+        paddingHorizontal: 10,
     },
-    logoutText: {
+    signOutButton: {
+        backgroundColor: "orange",
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        marginTop: 20,
+    },
+    signOutText: {
         color: "white",
-        fontSize: 16,
         fontWeight: "bold",
     },
 });
